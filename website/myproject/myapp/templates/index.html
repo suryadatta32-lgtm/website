@@ -1,0 +1,508 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gigue Bakery - CLIQ-FLIP</title>
+    <link rel="stylesheet" href="{% static 'style1.css' %}">
+</head>
+<body>
+
+    <div class="navbar">
+        <img src="{% static 'logo.png' %}" alt="Drink" style="height: 70px; width: 100px;">
+        <div>
+            <a href="#products">Products</a>
+            <div class="dropdown">
+                <a href="#">Categories ▾ </a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="filterProducts('all')">All</a>
+                    <a href="#" onclick="filterProducts('shoes')">Shoes</a>
+                    <a href="#" onclick="filterProducts('phones')">Phones</a>
+                    <a href="#" onclick="filterProducts('shirts')">Shirts</a>
+                    <a href="#" onclick="filterProducts('glasses')">Glasses</a>
+                    <a href="#" onclick="filterProducts('watch')">Watch</a>
+                </div>
+            </div>
+            <a href="{% url 'contact' %}">Contact Us</a>
+            <a href="{% url 'login' %}">Login/SignUp</a>
+            <a href="{% url 'cart' %}">Cart</a>
+        </div>
+    </div>
+
+    <div class="hero">
+        <div class="title">CLIQ-FLIP</div>
+        <div class="subtitle">Artisanal E-commerce for Everyday's Use</div>
+    </div>
+
+    <div class="carousel-container">
+        <button class="arrow left" onclick="scrollLeft()">‹</button>
+        <div class="carousel" id="carousel">
+            <div class="card"><img src="{% static 'phone.png' %}"></div>
+            <div class="card"><img src="{% static 'shoes.png' %}"></div>
+            <div class="card"><img src="{% static 'watch.png' %}"></div>
+            <div class="card"><img src="{% static 'earnshaw.png' %}"></div>
+            <div class="card"><img src="{% static 'tab.png' %}"></div>
+            <div class="card"><img src="{% static 'skechers.png' %}"></div>
+        </div>
+        <button class="arrow left" onclick="scrollCarouselLeft()">‹</button>
+        <button class="arrow right" onclick="scrollCarouselRight()">›</button>
+    </div>
+
+    <div class="product-wrapper" id="products">
+        <button class="arrow left" onclick="scrollLeftProducts()">‹</button>
+        <div class="product-section" id="productSection">
+            
+            <div class="product-card" data-category="phones">
+                <div class="img-box">
+                    <span class="discount">-25%</span>
+                    <span class="wishlist"> ♡ </span>
+                    <img src="{% static 'Nohting.jpg' %}">
+                </div>
+                <div class="product-info">
+                    <h4>Nothing Phone 4a pro</h4>
+                    <div class="price">
+                        <span class="new">Rs.9999</span>
+                        <span class="old">Rs.10000</span>
+                    </div>
+                    <div class="colors">
+                        <span class="dot red active-color" data-color="Red"></span>
+                        <span class="dot blue" data-color="Blue"></span>
+                    </div>
+                    <div class="sizes">
+                        <span class="active-size">brown</span><span>white</span><span>black</span>
+                    </div>
+                    <div class="bottom">
+                        <span class="rating"> ★ 4.8</span>
+                        <span class="buy" 
+                          data-name="Nothing Phone 4a pro" 
+                          data-price="Rs.9999" 
+                          data-img="{% static 'Nohting.jpg' %}" 
+                          onclick="buyNow(this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))"> BUY + </span>
+                    
+                    <button class="buy-btn" 
+                            data-name="Nothing Phone 4a pro" 
+                            data-price="Rs.9999" 
+                            data-img="{% static 'Nohting.jpg' %}" 
+                            onclick="addToCart(this, this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))">Add To Cart</button>
+                    </div>
+                        
+                </div>
+            </div>
+
+            <div class="product-card" data-category="shoes">
+                <div class="img-box">
+                    <span class="discount">-25%</span>
+                    <span class="wishlist"> ♡ </span>
+                    <img src="{% static 'bata.jpg' %}" style="object-fit: fluid;">
+                </div>
+                <div class="product-info">
+                    <h4>Bata walkers</h4>
+                    <div class="price">
+                        <span class="new">Rs.1999</span>
+                        <span class="old">Rs.2000</span>
+                    </div>
+                    <div class="colors">
+                        <span class="dot brown"></span>
+                        <span class="dot red"></span>
+                        <span class="dot blue"></span>
+                    </div>
+                    <div class="sizes">
+                        <span>7</span><span>8</span><span>9</span><span>10</span>
+                    </div>
+                    <div class="bottom">
+                        <span class="rating"> ★ 4.8</span>
+                        <span class="buy" 
+                          data-name="Bata walkers" 
+                          data-price="Rs.1999" 
+                          data-img="{% static 'bata.jpg' %}" 
+                          onclick="buyNow(this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))"> BUY + </span>
+                    
+                    <button class="buy-btn" 
+                            data-name="Bata walkers" 
+                            data-price="Rs.1999" 
+                            data-img="{% static 'bata.jpg' %}" 
+                            onclick="addToCart(this, this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))">Add To Cart</button>
+                     </div>
+                        
+                </div>
+            </div>
+
+            <div class="product-card" data-category="shirts">
+                <div class="img-box">
+                    <span class="discount">-50%</span>
+                    <span class="wishlist"> ♡ </span>
+                    <img src="{% static 'eagle.png' %}">
+                </div>
+                <div class="product-info">
+                    <h4>American Eagle Polo T-Shirt</h4>
+                    <div class="price">
+                        <span class="new">Rs.499</span>
+                        <span class="old">Rs.1000</span>
+                    </div>
+                    <div class="colors">
+                        <span class="dot red"></span>
+                        <span class="dot blue"></span>
+                    </div>
+                    <div class="sizes">
+                        <span>S</span><span>M</span><span>L</span><span>XL</span><span>XXL</span>
+                    </div>
+                    <div class="bottom">
+                        <span class="rating"> ★ 4.8</span>
+                        <span class="buy" 
+                          data-name="American Eagle Polo T-Shirt" 
+                          data-price="Rs.499" 
+                          data-img="{% static 'eagle.png' %}" 
+                          onclick="buyNow(this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))"> BUY + </span>
+                        <button class="buy-btn" 
+                                data-name="American Eagle Polo T-Shirt" 
+                                data-price="Rs.499" 
+                                data-img="{% static 'eagle.png' %}" 
+                                onclick="addToCart(this, this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))">Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+
+        <div class="product-card" data-category="shoes">
+    <div class="img-box">
+      <span class="discount">-25%</span>
+      <span class="wishlist">♡</span>
+      <img src="{% static 'adidas.jpg' %}">
+    </div>
+
+    <div class="product-info">
+      <h4>Adidas Running shoes</h4>
+      <div class="price">
+        <span class="new">Rs.2999</span>
+        <span class="old">Rs.3500</span>
+      </div>
+
+      <div class="colors">
+        <span class="dot red"></span>
+        <span class="dot blue"></span>
+      </div>
+
+      <div class="sizes">
+        <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+      </div>
+
+      <div class="bottom">
+        <span class="rating">★ 4.8</span>
+        <span class="buy" 
+                          data-name="Adidas Running shoes" 
+                          data-price="Rs.2999" 
+                          data-img="{% static 'adidas.jpg' %}"
+                          onclick="buyNow(this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))"> BUY + </span>
+                    
+                    <button class="buy-btn" 
+                            data-name="Adidas Running shoes" 
+                            data-price="Rs.2999" 
+                            data-img="{% static 'adidas.jpg' %}" 
+                            onclick="addToCart(this, this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))">Add To Cart</button>
+      </div>
+        
+    </div>
+  </div>
+
+  <div class="product-card" data-category="glasses">
+    <div class="img-box">
+      <span class="discount">-25%</span>
+      <span class="wishlist">♡</span>
+      <img src="{% static 'ray.jpg' %}">
+    </div>
+
+    <div class="product-info">
+      <h4>Ray-Ban aviator</h4>
+      <div class="price">
+        <span class="new">Rs.11,000</span>
+        <span class="old">Rs.12,000</span>
+      </div>
+
+      <div class="colors">
+        <span class="dot red"></span>
+        <span class="dot blue"></span>
+      </div>
+
+      <div class="sizes">
+        <span>S</span><span>M</span><span>L</span>
+      </div>
+
+      <div class="bottom">
+        <span class="rating">★ 4.8</span>
+        <span class="buy" 
+                          data-name="Ray-Ban aviator" 
+                          data-price="Rs.11,000" 
+                          data-img="{% static 'ray.jpg' %}"
+                          onclick="buyNow(this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))"> BUY + </span>
+                    
+                    <button class="buy-btn" 
+                            data-name="Ray-Ban aviator" 
+                            data-price="Rs.11,000" 
+                            data-img="{% static 'ray.jpg' %}" 
+                            onclick="addToCart(this, this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))">Add To Cart</button>
+      </div>
+        
+    </div>
+  </div>
+
+  <div class="product-card" data-category="shirts">
+    <div class="img-box">
+      <span class="discount">-25%</span>
+      <span class="wishlist">♡</span>
+      <img src="{% static 'us.png' %}">
+    </div>
+
+    <div class="product-info">
+      <h4>US Polo T-Shirts for Men</h4>
+      <div class="price">
+        <span class="new">Rs.899</span>
+        <span class="old">Rs.1200</span>
+      </div>
+
+      <div class="colors">
+        <span class="dot red"></span>
+        <span class="dot blue"></span>
+      </div>
+
+      <div class="sizes">
+        <span>S</span><span>M</span><span>L</span><span>XL</span><span>XXL</span>
+      </div>
+
+      <div class="bottom">
+        <span class="rating">★ 4.8</span>
+        <span class="buy" 
+                          data-name="US Polo T-Shirts for Men" 
+                          data-price="Rs.899" 
+                          data-img="{% static 'us.png' %}" 
+                          onclick="buyNow(this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))"> BUY + </span>
+                    
+                    <button class="buy-btn" 
+                            data-name="US Polo T-Shirts for Men" 
+                            data-price="Rs.899" 
+                            data-img="{% static 'us.png' %}" 
+                            onclick="addToCart(this, this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))">Add To Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="watch">
+    <div class="img-box">
+      <span class="discount">-25%</span>
+      <span class="wishlist">♡</span>
+      <img src="{% static 'cmf.jpg' %}">
+    </div>
+
+    <div class="product-info">
+      <h4>CMF watch pro 3</h4>
+      <div class="price">
+        <span class="new">Rs.2500</span>
+        <span class="old">Rs.3000</span>
+      </div>
+
+      <div class="colors">
+        <span class="dot red"></span>
+        <span class="dot blue"></span>
+      </div>
+
+      <div class="sizes">
+        <span>White</span><span>Nvay-Blue</span><span>Orange</span>
+      </div>
+
+      <div class="bottom">
+        <span class="rating">★ 4.8</span>
+        <span class="buy" 
+                          data-name="CMF watch pro 3" 
+                          data-price="Rs.2500" 
+                          data-img="{% static 'cmf.jpg' %}" 
+                          onclick="buyNow(this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))"> BUY + </span>
+                    
+                    <button class="buy-btn" 
+                            data-name="CMF watch pro 3" 
+                            data-price="Rs.2500" 
+                            data-img="{% static 'cmf.jpg' %}" 
+                            onclick="addToCart(this, this.getAttribute('data-name'), this.getAttribute('data-price'), this.getAttribute('data-img'))">Add To Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copy this block for more products -->
+   <button class="arrow right" onclick="scrollRightProducts()">›</button>
+
+</div>
+
+<div class="coupon-section">
+
+  <div class="coupon">
+    <div>
+      <p>Monday Happy</p>
+      <strong>#MONHPY</strong>
+    </div>
+    <span style="color:whitesmoke">20% Off</span>
+  </div>
+
+  <div class="coupon">
+    <div>
+      <p>Payday Surprise</p>
+      <strong>#SRPSPYDY</strong>
+    </div>
+    <span style="color:whitesmoke">20% Off</span>
+  </div>
+
+  <div class="coupon">
+    <div>
+      <p>First order</p>
+      <strong>#HPYFRST</strong>
+    </div>
+    <span style="color:whitesmoke">20% Off</span>
+  </div>
+
+  <div class="coupon">
+    <div>
+      <p>Vegetarian Food</p>
+      <strong>#VEGANLOVE</strong>
+    </div>
+    <span style="color:whitesmoke">20% Off</span>
+  </div>
+
+</div>
+<script>
+const carousel = document.getElementById("carousel"); 
+
+function scrollCarouselLeft() {
+  carousel.scrollBy({ left: -300, behavior: "smooth" });
+}
+
+function scrollCarouselRight() {
+  carousel.scrollBy({ left: 300, behavior: "smooth" });
+}
+const productSection = document.getElementById("productSection");
+
+function scrollLeftProducts() {
+  productSection.scrollBy({ left: -300, behavior: "smooth" });
+}
+
+function scrollRightProducts() {
+  productSection.scrollBy({ left: 300, behavior: "smooth" });
+}
+
+function filterProducts(category) {
+  const products = document.querySelectorAll(".product-card");
+
+  products.forEach(product => {
+    if (category === "all") {
+      product.style.display = "block";
+    } else {
+      const productCategory = product.getAttribute("data-category");
+      product.style.display = productCategory === category ? "block" : "none";
+    }
+  });
+}
+
+// COLOR SELECT
+
+document.querySelectorAll(".colors .dot").forEach(dot => {
+
+  dot.addEventListener("click", function(){
+
+    let parent =
+    this.parentElement.querySelectorAll(".dot");
+
+    parent.forEach(d =>
+    d.classList.remove("active-color"));
+
+    this.classList.add("active-color");
+  });
+
+});
+
+
+// SIZE SELECT
+
+document.querySelectorAll(".sizes span").forEach(size => {
+
+  size.addEventListener("click", function(){
+
+    let parent =
+    this.parentElement.querySelectorAll("span");
+
+    parent.forEach(s =>
+    s.classList.remove("active-size"));
+
+    this.classList.add("active-size");
+  });
+
+});
+
+
+// ADD TO CART
+
+function addToCart(button,name,price,image){
+
+  let productCard =
+  button.closest(".product-card");
+
+  let selectedColor =
+  productCard.querySelector(".active-color")
+  ?.getAttribute("data-color");
+
+  let selectedSize =
+  productCard.querySelector(".active-size")
+  ?.innerText;
+
+  let cart =
+  JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart.push({
+    name:name,
+    price:price,
+    image:image,
+    color:selectedColor,
+    size:selectedSize
+  });
+
+  localStorage.setItem("cart",
+  JSON.stringify(cart));
+
+  alert(name + " added to cart!");
+}
+
+function buyNow(name,price,image){
+
+    let buyItem = {
+        name:name,
+        price:price,
+        image:image,
+        quantity:1
+    };
+
+    localStorage.setItem("buyNowItem", JSON.stringify(buyItem));
+    localStorage.setItem("checkoutType", "buyNow");
+
+    console.log("Buy Now Saved:", buyItem);
+
+    window.location.href = "{% url 'checkout' %}";
+}
+</script>
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <h3>CLIQ-FLIP</h3>
+        <p>Your one-stop destination for fashion, electronics, and lifestyle products.</p>
+
+        <div class="footer-links">
+            <a href="#">Home</a>
+            <a href="#products">Products</a>
+            <a href="{% url 'contact' %}">Contact Us</a>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'cart' %}">Cart</a>
+        </div>
+
+        <p class="copyright">
+            © 2026 CLIQ-FLIP. All Rights Reserved.
+        </p>
+    </div>
+</footer>
+</body>
+</html>
+
+            <!-- More product cards can be added here following the same structure -->

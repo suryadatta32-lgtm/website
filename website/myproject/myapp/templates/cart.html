@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart - CLIQ-FLIP</title>
+<link rel="stylesheet" href="{% static 'style8.css' %}">
+</head>
+<body>
+<div class="navbar">
+   <img src="{% static 'logo.png' %}" alt="Drink" style="height: 70px; width: 100px;">
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'login' %}">Login/Signup</a>
+        <a href="{% url 'cart' %}">Cart</a>
+    </div>
+</div>
+
+<div class="cart-page">
+    <div class="cart-header">
+        <div>Product</div><div>Price</div><div>Quantity</div><div>Total</div><div></div>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    
+    <div class="cart-actions">
+        <div class="coupon"><input type="text" placeholder="Promo Code"><button>Apply</button></div>
+        <button class="update-btn" onclick="updateCart()">Update Cart</button>
+    </div>
+
+    <div class="bottom-section">
+        <div class="recommended">
+            <h2>You may be interested in</h2>
+            <div class="recommend-grid">
+                <div class="recommend-card">
+                    <!-- Django syntax for static recommended placeholder item -->
+                    <img src="{% static 'eagle.png' %}">
+                    <div class="recommend-content">
+                        <h3>US Polo T-Shirt</h3>
+                        <div class="new-price">Rs.899</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cart-total">
+            <h2>Cart Totals</h2>
+            <div class="total-row"><span>Subtotal</span><span id="subtotal">Rs.0</span></div>
+            <div class="total-row"><span>Shipping</span><span>Rs.50</span></div>
+            <hr><br>
+            <div class="total-row"><strong>Total</strong><strong id="grandTotal">Rs.0</strong></div>
+            <button class="checkout-btn" onclick="goToCheckout()">Proceed To Checkout</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cartItems = document.getElementById("cartItems");
+
+function displayCart(){
+    cartItems.innerHTML = "";
+    let subtotalValue = 0;
+    if(cart.length === 0){
+        cartItems.innerHTML = `<h2 style="padding:20px 0;">Your Cart Is Empty</h2>`;
+        document.getElementById("subtotal").innerText = "Rs.0";
+        document.getElementById("grandTotal").innerText = "Rs.0";
+        return;
+    }
+    cart.forEach((item, index)=>{
+        let price = parseInt(item.price.replace(/[^0-9]/g,''));
+        let qty = item.quantity || 1;
+        let total = price * qty;
+        subtotalValue += total;
+        
+        cartItems.innerHTML += `
+        <div class="cart-item">
+            <div class="product">
+                <img src="${item.image}">
+                <div class="product-details">
+                    <h3>${item.name}</h3>
+                    <p>Size: Default</p>
+                </div>
+            </div>
+            <div class="price">${item.price}</div>
+            <div class="quantity">
+                <button onclick="decreaseQty(${index})">-</button>
+                <span>${qty}</span>
+                <button onclick="increaseQty(${index})">+</button>
+            </div>
+            <div class="total">Rs.${total}</div>
+            <div class="remove" onclick="removeItem(${index})">×</div>
+        </div>`;
+    });
+    document.getElementById("subtotal").innerText = "Rs." + subtotalValue;
+    document.getElementById("grandTotal").innerText = "Rs." + (subtotalValue + 50);
+}
+
+function increaseQty(index){ cart[index].quantity = (cart[index].quantity || 1) + 1; updateCart(); }
+function decreaseQty(index){ if((cart[index].quantity || 1) > 1){ cart[index].quantity--; updateCart(); } }
+function removeItem(index){ cart.splice(index,1); updateCart(); }
+function updateCart(){ localStorage.setItem("cart", JSON.stringify(cart)); displayCart(); }
+function goToCheckout(){ localStorage.setItem("checkoutType","cart"); window.location.href = "{% url 'checkout' %}"; }
+
+displayCart();
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout Secure - CLIQ-FLIP</title>
+<link rel="stylesheet" href="{% static 'style4.css' %}">
+<style>
+    /* Styling for the immediate display container */
+    .just-saved-box {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #e6f7ff;
+        border: 1px solid #91d5ff;
+        border-radius: 6px;
+        color: #0050b3;
+    }
+    .just-saved-box h3 { margin-top: 0; margin-bottom: 10px; font-size: 16px; color: #003a8c;}
+</style>
+</head>
+<body>
+<div class="checkout-container">
+    <form class="checkout-form" method="POST">
+        {% csrf_token %}
+        <h1>Billing Details</h1>
+        <div class="form-row">
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+        </div>
+        <div class="full">
+            <input type="text" name="street_address" placeholder="Street Address" required>
+        </div>
+        <div class="form-row">
+            <input type="text" name="city" placeholder="City" required>
+            <input type="text" name="postal_code" placeholder="Postal Code" required>
+        </div>
+        <div class="form-row">
+            <select name="country">
+                <option value="India">India</option>
+                <option value="United States">United States</option>
+            </select>
+            <select name="delivery_type">
+                <option value="Standard Home Delivery">Standard Home Delivery</option>
+                <option value="Office Delivery">Office Delivery</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="checkout-btn">Save Details</button>
+
+        {% if current_submission %}
+            <div class="just-saved-box">
+                <h3>✓ Information Registered Successfully</h3>
+                <strong>Name:</strong> {{ current_submission.first_name }} {{ current_submission.last_name }}<br>
+                <strong>Address:</strong> {{ current_submission.street_address }}, {{ current_submission.city }} - {{ current_submission.postal_code }}<br>
+                <strong>Country:</strong> {{ current_submission.country }}<br>
+                <strong>Delivery Type:</strong> {{ current_submission.delivery_type }}
+            </div>
+        {% endif %}
+    </form>
+    
+    <div class="order-box">
+        <h2>Your Order Summary</h2>
+        <div id="orderItems"></div>
+        <div class="total-box">
+            <div class="total-row"><span>Subtotal</span><span id="subtotal">Rs.0</span></div>
+            <div class="total-row"><span>Delivery Fee</span><span>Rs.50</span></div>
+            <hr><br>
+            <div class="total-row"><strong>Grand Total</strong><strong id="grandTotal">Rs.0</strong></div>
+            <button class="checkout-btn" onclick="goToPayment()">Place Order</button>
+            <button class="home-btn" onclick="goHome()">Cancel & Go Home</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let orderItems = document.getElementById("orderItems");
+let checkoutType = localStorage.getItem("checkoutType");
+let subtotal = 0;
+
+if(checkoutType === "buyNow"){
+    let item = JSON.parse(localStorage.getItem("buyNowItem"));
+    if(item){
+        subtotal = Number(item.price.replace(/[^0-9]/g, ""));
+        orderItems.innerHTML = `
+        <div class="order-item">
+            <img src="${item.image}">
+            <div><h4>${item.name}</h4><p>${item.price} × 1</p></div>
+        </div>`;
+    }
+} else {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.forEach(item => {
+        let price = Number(item.price.replace(/[^0-9]/g, ""));
+        let qty = item.quantity || 1;
+        subtotal += price * qty;
+        orderItems.innerHTML += `
+        <div class="order-item">
+            <img src="${item.image}">
+            <div><h4>${item.name}</h4><p>${item.price} × ${qty}</p></div>
+        </div>`;
+    });
+}
+document.getElementById("subtotal").innerText = "Rs." + subtotal;
+document.getElementById("grandTotal").innerText = "Rs." + (subtotal + 50);
+
+function goHome(){ window.location.href = "{% url 'home' %}"; }
+
+localStorage.setItem("orderSubtotal", "Rs. " + subtotal);
+
+function goToPayment() {
+    window.location.href = "{% url 'payment' %}";
+}
+</script>
+</body>
+</html>

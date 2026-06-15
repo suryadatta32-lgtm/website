@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us - CLIQ-FLIP</title>
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="info-boxes">
+        <div class="box">
+            <div class="icon">📍</div>
+            <h4>OUR MAIN OFFICE</h4>
+            <p>Industrial Estate<br>Pappanamcode, Trivandrum-695019</p>
+        </div>
+        <div class="box">
+            <div class="icon">📞</div>
+            <h4>PHONE NUMBER</h4>
+            <p>+91 9955667722<br>888-0123-4567 (Toll Free)</p>
+        </div>
+        <div class="box">
+            <div class="icon">📠</div>
+            <h4>FAX</h4>
+            <p>+91-234-567-8900</p>
+        </div>
+        <div class="box">
+            <div class="icon">✉️</div>
+            <h4>EMAIL</h4>
+            <p>cliqflip@gmail.com</p>
+        </div>
+    </div>
+    
+    <div class="contact-form">
+    <h2>Contact Us</h2>
+    
+    <form method="POST" action="{% url 'contact' %}">
+        {% csrf_token %} <input type="text" name="name" placeholder="Enter your Name" required>
+        
+        <input type="email" name="email" placeholder="Enter a valid email address" required>
+        
+        <textarea name="message" placeholder="Enter your message" required></textarea>
+        
+        <button type="submit">SUBMIT</button>
+    </form>
+</div>
+</div>
+</body>
+</html>

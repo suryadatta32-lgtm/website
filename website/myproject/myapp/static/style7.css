@@ -1,0 +1,225 @@
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Poppins', sans-serif; 
+}
+
+body { 
+    background: #f5f5f5; 
+    padding: 40px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+}
+
+/* Two-Column Main Structure Container */
+.container { 
+    background: white; 
+    width: 100%; 
+    max-width: 900px; 
+    border-radius: 20px; 
+    display: grid; 
+    grid-template-columns: 1fr 1.2fr; 
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08); 
+    overflow: hidden; 
+}
+
+/* Left Sidebar: Payment Type Selectors */
+.methods-column { 
+    background: #fafafa; 
+    padding: 40px; 
+    border-right: 1px solid #eee; 
+}
+
+.methods-column h2 { 
+    margin-bottom: 25px; 
+    font-size: 22px; 
+    color: #111; 
+}
+
+.option-card { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    padding: 16px; 
+    background: white; 
+    border: 2px solid #eaeaea; 
+    border-radius: 12px; 
+    margin-bottom: 15px; 
+    cursor: pointer; 
+    transition: 0.2s; 
+}
+
+.option-card:hover { 
+    border-color: #ff6b4a; 
+    background: #fffcfb; 
+}
+
+.option-card.active { 
+    border-color: #ff6b4a; 
+    background: #fff6f3; 
+}
+
+.option-card input[type="radio"] { 
+    transform: scale(1.2); 
+    accent-color: #ff6b4a; 
+}
+
+.option-card label { 
+    font-weight: 500; 
+    cursor: pointer; 
+    width: 100%; 
+}
+
+/* Right Content Area: Forms, QR Codes & Grids */
+.details-column { 
+    padding: 40px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+}
+
+.amount-banner { 
+    background: #111; 
+    color: white; 
+    padding: 15px 20px; 
+    border-radius: 10px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 30px; 
+}
+
+.amount-banner span { 
+    font-size: 14px; 
+    opacity: 0.8; 
+}
+
+.amount-banner strong { 
+    font-size: 20px; 
+}
+
+/* Tab/Panel Toggle Component Mechanics */
+.payment-panel { 
+    display: none; 
+    animation: fadeIn 0.3s ease; 
+}
+
+.payment-panel.active { 
+    display: block; 
+}
+
+@keyframes fadeIn { 
+    from { 
+        opacity: 0; 
+        transform: translateY(5px); 
+    } 
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    } 
+}
+
+/* Option Content 1: QR Code Scanner Elements */
+.qr-container { 
+    text-align: center; 
+    padding: 20px 0; 
+}
+
+.qr-container img { 
+    width: 200px; 
+    height: 200px; 
+    background: #eee; 
+    border: 1px solid #ddd; 
+    padding: 10px; 
+    border-radius: 10px; 
+    margin-bottom: 15px; 
+}
+
+.qr-container p { 
+    color: #666; 
+    font-size: 14px; 
+}
+
+/* Option Content 2: Checkout Credit/Debit Form Inputs */
+.form-group { 
+    margin-bottom: 18px; 
+}
+
+.form-group label { 
+    display: block; 
+    font-size: 13px; 
+    font-weight: 500; 
+    margin-bottom: 6px; 
+    color: #555; 
+}
+
+input { 
+    width: 100%; 
+    padding: 12px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    font-size: 14px; 
+    outline: none; 
+}
+
+input:focus { 
+    border-color: #ff6b4a; 
+}
+
+.form-row { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; 
+}
+
+/* Option Content 3: Net Banking Bank List Grid Layout */
+.bank-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 12px; 
+}
+
+.bank-option { 
+    padding: 14px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    text-align: center; 
+    cursor: pointer; 
+    font-size: 14px; 
+    font-weight: 500; 
+    transition: 0.2s; 
+}
+
+.bank-option:hover { 
+    border-color: #111; 
+    background: #f9f9f9; 
+}
+
+.bank-option.selected { 
+    background: #111; 
+    color: white; 
+    border-color: #111; 
+}
+
+/* Master Primary CTA Checkout Confirmation Button */
+.submit-btn { 
+    width: 100%; 
+    padding: 16px; 
+    border: none; 
+    background: #ff6b4a; 
+    color: white; 
+    border-radius: 10px; 
+    font-size: 16px; 
+    font-weight: 600; 
+    cursor: pointer; 
+    margin-top: 30px; 
+    transition: 0.2s; 
+}
+
+.submit-btn:hover { 
+    background: #e55a39; 
+}

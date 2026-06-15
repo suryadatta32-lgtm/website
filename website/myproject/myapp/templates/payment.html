@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment Portal - CLIQ-FLIP</title>
+   
+    <link rel="stylesheet" href="{% static 'style7.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <div class="methods-column">
+        <h2>Choose Payment Method</h2>
+        
+        <div class="option-card active" onclick="switchTab('upi', this)">
+            <input type="radio" id="radioUpi" name="payMethod" checked>
+            <label for="radioUpi">UPI (GooglePay / PhonePe)</label>
+        </div>
+
+        <div class="option-card" onclick="switchTab('card', this)">
+            <input type="radio" id="radioCard" name="payMethod">
+            <label for="radioCard">Credit / Debit Card</label>
+        </div>
+
+        <div class="option-card" onclick="switchTab('netbanking', this)">
+            <input type="radio" id="radioNet" name="payMethod">
+            <label for="radioNet">Net Banking</label>
+        </div>
+
+        <div class="option-card" onclick="switchTab('cod', this)">
+            <input type="radio" id="radioCod" name="payMethod">
+            <label for="radioCod">Cash on Delivery (COD)</label>
+        </div>
+    </div>
+
+    <div class="details-column">
+        <div>
+            <div class="amount-banner">
+                <span>Amount to Pay</span>
+                <strong id="displayAmount">Rs. 0</strong>
+            </div>
+
+            <div id="panel-upi" class="payment-panel active">
+                <h3>Scan QR Code to Pay</h3>
+                <div class="qr-container">
+                    <img src="{% static 'images/qr_placeholder.png' %}" alt="Payment QR Code" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=CLIQFLIP-MOCK-PAYMENT'">
+                    <p>Open Google Pay, PhonePe, or BHIM to scan and complete your order transaction.</p>
+                </div>
+            </div>
+
+            <div id="panel-card" class="payment-panel">
+                <h3>Enter Card Details</h3><br>
+                <div class="form-group">
+                    <label>CARDHOLDER NAME</label>
+                    <input type="text" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>CARD NUMBER</label>
+                    <input type="text" placeholder="XXXX XXXX XXXX XXXX" maxlength="19">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>EXPIRY DATE</label>
+                        <input type="text" placeholder="MM/YY" maxlength="5">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV NUMBER</label>
+                        <input type="password" placeholder="***" maxlength="3">
+                    </div>
+                </div>
+            </div>
+
+            <div id="panel-netbanking" class="payment-panel">
+                <h3>Select Your Bank</h3><br>
+                <div class="bank-grid">
+                    <div class="bank-option" onclick="selectBank(this)">State Bank of India (SBI)</div>
+                    <div class="bank-option" onclick="selectBank(this)">HDFC Bank</div>
+                    <div class="bank-option" onclick="selectBank(this)">ICICI Bank</div>
+                    <div class="bank-option" onclick="selectBank(this)">Axis Bank</div>
+                    <div class="bank-option" onclick="selectBank(this)">Kotak Mahindra Bank</div>
+                    <div class="bank-option" onclick="selectBank(this)">Punjab National Bank</div>
+                </div>
+            </div>
+
+            <div id="panel-cod" class="payment-panel">
+                <h3>Cash on Delivery Selected</h3><br>
+                <p style="color:#555; font-size:15px; line-height:1.6;">No advance payment required. You will pay cash to our logistics courier partner upon package handover directly at your delivery location.</p>
+            </div>
+        </div>
+
+        <button class="submit-btn" onclick="completePayment()">Complete Secure Payment</button>
+    </div>
+</div>
+
+<script>
+    // 1. Fetch data directly out from temporary local sessions storage
+    let subtotal = localStorage.getItem("orderSubtotal") || "Rs.0";
+    document.getElementById("displayAmount").innerText = subtotal;
+
+    let selectedMethod = "upi";
+
+    // 2. Tab Switching Logic for panels
+    function switchTab(panelId, element) {
+        selectedMethod = panelId;
+        
+        // Hide all details columns views
+        document.querySelectorAll('.payment-panel').forEach(panel => panel.classList.remove('active'));
+        // Deactivate old active state selection styles border markers
+        document.querySelectorAll('.option-card').forEach(card => card.classList.remove('active'));
+        
+        // Activate current panel target view layout 
+        document.getElementById('panel-' + panelId).classList.add('active');
+        element.classList.add('active');
+        
+        // Sync radio bubble indicators programmatically
+        element.querySelector('input[type="radio"]').checked = true;
+    }
+
+    // 3. Selection action logic tracker for Bank List Grid options 
+    function selectBank(element) {
+        document.querySelectorAll('.bank-option').forEach(bank => bank.classList.remove('selected'));
+        element.classList.add('selected');
+    }
+
+    // 4. Verification transaction process handling routine and clear session 
+    function completePayment() {
+        if (selectedMethod === "netbanking") {
+            let selectedBank = document.querySelector('.bank-option.selected');
+            if (!selectedBank) {
+                alert("Please select a bank to proceed with Net Banking.");
+                return;
+            }
+            alert("Redirecting to online security portal of " + selectedBank.innerText + "... Payment Successful!");
+        } else if (selectedMethod === "card") {
+            alert("Validating inputs securely... Card Charged Successfully!");
+        } else if (selectedMethod === "upi") {
+            alert("QR Code validation successful! Transaction Verified.");
+        } else {
+            alert("Order Registered! Code verification package allocated via COD.");
+        }
+
+        // Clean out shopping carts parameters state storage caches cleanly upon purchase complete
+        localStorage.removeItem("cart");
+        localStorage.removeItem("buyNowItem");
+        localStorage.removeItem("orderSubtotal");
+
+        alert("Thank you for your purchase! Redirecting back to Homepage.");
+        // Redirects smoothly back to your core home view landing page
+        window.location.href = "{% url 'home' %}";
+    }
+</script>
+</body>
+</html>

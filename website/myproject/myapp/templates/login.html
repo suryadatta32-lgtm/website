@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Access - CLIQ-FLIP</title>
+    <link rel="stylesheet" href="{% static 'style3.css' %}">
+</head>
+<body>
+    <div class="background-container">
+        <!-- Register Display Box -->
+        <div class="form-wrapper fade-in" id="signup-form">
+    <h2>Create Your Account</h2>
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="signup"> <div class="input-group">
+            <label>FULL NAME</label>
+            <div class="input-field"><input type="text" name="full_name" required></div>
+        </div>
+        <div class="input-group">
+            <label>EMAIL ADDRESS</label>
+            <div class="input-field"><input type="email" name="email" required></div>
+        </div>
+        <div class="input-group">
+            <label>PASSWORD</label>
+            <div class="input-field"><input type="password" name="password" required></div>
+        </div>
+        <button type="submit" class="btn-primary">Sign Up</button>
+    </form>
+    <p class="footer-text">Already a member? <a href="#" onclick="toggleForm()">Sign In</a></p>
+</div>
+
+<div class="form-wrapper fade-in hidden" id="login-form">
+    <h2>Welcome Back</h2>
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="login"> <div class="input-group">
+            <label>EMAIL ADDRESS</label>
+            <div class="input-field"><input type="email" name="email" required></div>
+        </div>
+        <div class="input-group">
+            <label>PASSWORD</label>
+            <div class="input-field"><input type="password" name="password" required></div>
+        </div>
+        <button type="submit" class="btn-primary">Login</button>
+    </form>
+    <p class="footer-text">Don't have an account? <a href="#" onclick="toggleForm()">Sign Up</a></p>
+</div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            document.getElementById('signup-form').classList.toggle('hidden');
+            document.getElementById('login-form').classList.toggle('hidden');
+        }
+        document.getElementById('sForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Account registered successfully!");
+            toggleForm();
+        });
+        document.getElementById('lForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Login Successful!");
+            // Redirect back to home layout dynamically via Django path matching
+            window.location.href = "{% url 'home' %}";
+        });
+    </script>
+</body>
+</html>
