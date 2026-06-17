@@ -55,6 +55,11 @@
             
             <div class="product-card" data-category="phones">
                 <div class="img-box">
+                  <div class="image-qty">
+        <button onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value">1</span>
+        <button onclick="changeQty(this,1)">+</button>
+    </div>
                     <span class="discount">-25%</span>
                     <span class="wishlist"> ♡ </span>
                     <img src="{% static 'Nohting.jpg' %}">
@@ -92,6 +97,11 @@
 
             <div class="product-card" data-category="shoes">
                 <div class="img-box">
+                  <div class="image-qty">
+        <button onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value">1</span>
+        <button onclick="changeQty(this,1)">+</button>
+    </div>
                     <span class="discount">-25%</span>
                     <span class="wishlist"> ♡ </span>
                     <img src="{% static 'bata.jpg' %}" style="object-fit: fluid;">
@@ -130,6 +140,11 @@
 
             <div class="product-card" data-category="shirts">
                 <div class="img-box">
+                  <div class="image-qty">
+        <button onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value">1</span>
+        <button onclick="changeQty(this,1)">+</button>
+    </div>
                     <span class="discount">-50%</span>
                     <span class="wishlist"> ♡ </span>
                     <img src="{% static 'eagle.png' %}">
@@ -165,6 +180,11 @@
 
         <div class="product-card" data-category="shoes">
     <div class="img-box">
+      <div class="image-qty">
+        <button onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value">1</span>
+        <button onclick="changeQty(this,1)">+</button>
+    </div>
       <span class="discount">-25%</span>
       <span class="wishlist">♡</span>
       <img src="{% static 'adidas.jpg' %}">
@@ -247,6 +267,11 @@
 
   <div class="product-card" data-category="shirts">
     <div class="img-box">
+      <div class="image-qty">
+        <button onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value">1</span>
+        <button onclick="changeQty(this,1)">+</button>
+    </div>
       <span class="discount">-25%</span>
       <span class="wishlist">♡</span>
       <img src="{% static 'us.png' %}">
@@ -287,6 +312,11 @@
 
   <div class="product-card" data-category="watch">
     <div class="img-box">
+      <div class="image-qty">
+        <button onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value">1</span>
+        <button onclick="changeQty(this,1)">+</button>
+    </div>
       <span class="discount">-25%</span>
       <span class="wishlist">♡</span>
       <img src="{% static 'cmf.jpg' %}">
@@ -433,37 +463,65 @@ document.querySelectorAll(".sizes span").forEach(size => {
 
 });
 
+function changeQty(button, change){
+
+    const qtyElement =
+    button.parentElement.querySelector(".qty-value");
+
+    let qty =
+    parseInt(qtyElement.innerText);
+
+    qty += change;
+
+    if(qty < 1){
+        qty = 1;
+    }
+
+    qtyElement.innerText = qty;
+}
+
 
 // ADD TO CART
 
 function addToCart(button,name,price,image){
 
-  let productCard =
-  button.closest(".product-card");
+    let productCard =
+    button.closest(".product-card");
 
-  let selectedColor =
-  productCard.querySelector(".active-color")
-  ?.getAttribute("data-color");
+    let selectedColor =
+    productCard.querySelector(".active-color")
+    ?.getAttribute("data-color") || "Default";
 
-  let selectedSize =
-  productCard.querySelector(".active-size")
-  ?.innerText;
+    let selectedSize =
+    productCard.querySelector(".active-size")
+    ?.innerText || "Default";
 
-  let cart =
-  JSON.parse(localStorage.getItem("cart")) || [];
+    let quantity =
+    parseInt(
+        productCard.querySelector(".qty-value").innerText
+    );
 
-  cart.push({
-    name:name,
-    price:price,
-    image:image,
-    color:selectedColor,
-    size:selectedSize
-  });
+    let cart =
+    JSON.parse(localStorage.getItem("cart")) || [];
 
-  localStorage.setItem("cart",
-  JSON.stringify(cart));
+    cart.push({
+        name:name,
+        price:price,
+        image:image,
+        color:selectedColor,
+        size:selectedSize,
+        quantity:quantity
+    });
 
-  alert(name + " added to cart!");
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    alert(
+        quantity + " × " + name +
+        " added to cart!"
+    );
 }
 
 function buyNow(name,price,image){
