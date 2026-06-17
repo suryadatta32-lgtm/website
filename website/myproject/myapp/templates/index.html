@@ -226,6 +226,11 @@
 
   <div class="product-card" data-category="glasses">
     <div class="img-box">
+      <div class="image-qty">
+        <button onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value">1</span>
+        <button onclick="changeQty(this,1)">+</button>
+    </div>
       <span class="discount">-25%</span>
       <span class="wishlist">♡</span>
       <img src="{% static 'ray.jpg' %}">
