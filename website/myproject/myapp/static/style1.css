@@ -57,52 +57,6 @@ body {
         justify-content: space-between;
     }
 
-    .qty-selector {
-  display: inline-flex;
-  align-items: center;
-  background-color: #f1f3f5;
-  border-radius: 30px;
-  padding: 2px 4px;
-  gap: 2px;
-  margin: 10px auto;
-  border: 1px solid #e2e8f0;
-}
-
-.qty-btn {
-  background: transparent;
-  border: none;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: #4a5568;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-}
-
-.qty-btn:hover {
-  background-color: #ffffff;
-  color: #000000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.qty-val {
-  width: 28px;
-  border: none;
-  background: transparent;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 700;
-  color: #1a202c;
-  outline: none;
-  pointer-events: none; /* Prevents manual typing bugs */
-}
-
-
     .btn {
         background: #e8d7c6;
         color: black;
@@ -214,6 +168,29 @@ body {
     width: 100%;
     height: 220px;
     object-fit: cover;
+}
+
+.image-qty{
+    position:absolute;
+    bottom:10px;
+    right:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(255,255,255,0.95);
+    padding:6px 10px;
+    border-radius:30px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
+    z-index:10;
+}
+
+.image-qty button{
+    width:28px;
+    height:28px;
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+    font-weight:bold;
 }
 
 .discount {
