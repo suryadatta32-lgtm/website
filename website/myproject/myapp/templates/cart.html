@@ -55,7 +55,7 @@
 </div>
 
 <script>
-let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 const cartItems = document.getElementById("cartItems");
 
 function displayCart(){
@@ -79,8 +79,8 @@ function displayCart(){
                 <img src="${item.image}">
                 <div class="product-details">
                    <h3>${item.name}</h3>
-                    <p>Color: ${item.color || 'N/A'}</p>
                     <p>Size: ${item.size || 'N/A'}</p>
+                    <p>Color: ${item.color || 'N/A'}</p>
                     <p>Quantity: ${qty}</p>
                 </div>
             </div>
