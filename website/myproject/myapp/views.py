@@ -53,7 +53,7 @@ from django.shortcuts import render
 from .models import BillingDetail
 
 def checkout_view(request):
-    current_submission = None  # Start with nothing
+    current_submission = None
 
     if request.method == "POST":
         first_name = request.POST.get('first_name')
@@ -64,8 +64,8 @@ def checkout_view(request):
         country = request.POST.get('country')
         delivery_type = request.POST.get('delivery_type')
 
-        # Save to the admin database
-        current_submission = BillingDetail.objects.create(
+        # 1. Save to database
+        submission = BillingDetail.objects.create(
             first_name=first_name,
             last_name=last_name,
             street_address=street_address,
@@ -75,12 +75,19 @@ def checkout_view(request):
             delivery_type=delivery_type
         )
         
-        # Instead of redirecting (which clears state), we render directly 
-        # to show the 'current_submission' we just made.
+        # 2. Store the ID in the session and redirect
+        request.session['just_saved_id'] = submission.id
+        return redirect('checkout')  # Replace 'checkout' with your actual URL name
+
+    # 3. On a GET request, check if we just saved something
+    just_saved_id = request.session.pop('just_saved_id', None) # .pop() reads and clears it immediately
+    if just_saved_id:
+        try:
+            current_submission = BillingDetail.objects.get(id=just_saved_id)
+        except BillingDetail.DoesNotExist:
+            current_submission = None
 
     return render(request, 'checkout.html', {'current_submission': current_submission})
-
-
 def payment_view(request):
     """Renders the final payment processing and confirmation page."""
     return render(request, 'payment.html')
