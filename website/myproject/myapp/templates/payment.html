@@ -96,8 +96,14 @@
 
 <script>
     // 1. Fetch data directly out from temporary local sessions storage
-    let subtotal = localStorage.getItem("orderSubtotal") || "Rs.0";
-    document.getElementById("displayAmount").innerText = subtotal;
+    let subtotalText = localStorage.getItem("orderSubtotal") || "Rs.0";
+
+let subtotal = parseInt(subtotalText.replace(/[^0-9]/g, "")) || 0;
+let shippingFee = 50;
+let grandTotal = subtotal + shippingFee;
+
+document.getElementById("displayAmount").innerText = "Rs. " + grandTotal;
+
 
     let selectedMethod = "upi";
 
