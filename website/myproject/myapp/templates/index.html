@@ -488,34 +488,33 @@ function changeQty(button, change){
 
 // ADD TO CART
 
-function addToCart(button,name,price,image){
+function addToCart(button, name, price, image){
 
-    let productCard =
-    button.closest(".product-card");
+    let productCard = button.closest(".product-card");
 
     let selectedColor =
-    productCard.querySelector(".active-color")
-    ?.getAttribute("data-color") || "Default";
+        productCard.querySelector(".active-color")
+        ?.getAttribute("data-color") || "Default";
 
     let selectedSize =
-    productCard.querySelector(".active-size")
-    ?.innerText || "Default";
+        productCard.querySelector(".active-size")
+        ?.innerText || "Default";
 
     let quantity =
-    parseInt(
-        productCard.querySelector(".qty-value").innerText
-    );
+        parseInt(
+            productCard.querySelector(".qty-value").innerText
+        );
 
     let cart =
-    JSON.parse(localStorage.getItem("cart")) || [];
+        JSON.parse(localStorage.getItem("cart")) || [];
 
     cart.push({
-        name:name,
-        price:price,
-        image:image,
-        color:selectedColor,
-        size:selectedSize,
-        quantity:quantity
+        name: name,
+        price: price,
+        image: image,
+        quantity: quantity,
+        size: selectedSize,
+        color: selectedColor
     });
 
     localStorage.setItem(
@@ -523,27 +522,7 @@ function addToCart(button,name,price,image){
         JSON.stringify(cart)
     );
 
-    alert(
-        quantity + " × " + name +
-        " added to cart!"
-    );
-}
-
-function buyNow(name,price,image){
-
-    let buyItem = {
-        name:name,
-        price:price,
-        image:image,
-        quantity:1
-    };
-
-    localStorage.setItem("buyNowItem", JSON.stringify(buyItem));
-    localStorage.setItem("checkoutType", "buyNow");
-
-    console.log("Buy Now Saved:", buyItem);
-
-    window.location.href = "{% url 'checkout' %}";
+    alert(quantity + " × " + name + " added to cart!");
 }
 </script>
 <!-- Footer -->
